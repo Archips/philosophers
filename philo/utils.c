@@ -1,5 +1,16 @@
 #include "philo.h"
 
+long long ft_gettime(void)
+{
+	struct timeval	time_value;
+	long long		time;
+
+	gettimeofday(&time_value, NULL);
+	time = time_value.tv_sec * 1000 + time_value.tv_usec / 1000;
+	return (time);
+}
+
+
 int	ft_strlen(const char *str)
 {
 	int	i;

@@ -46,15 +46,21 @@ int	ft_check_args(int ac, char **av)
 
 int	ft_error_message(int err)
 {
-	if (error == 1)
+	if (err == 1)
 		write(2, ERR_1, ft_strlen(ERR_1));
-	if (error == 2)
+	if (err == 2)
 		write(2, ERR_2, ft_strlen(ERR_2));
-	if (error == 3)
+	if (err == 3)
 		write(2, ERR_3, ft_strlen(ERR_3));
-	if (error == 4)
+	if (err == 4)
 		write(2, ERR_4, ft_strlen(ERR_4));
-	if (error == 5)
-		write(2, ERR_5, ft_strlen(ERR_4));
+	if (err == 5)
+		write(2, ERR_5, ft_strlen(ERR_5));
+	if (err == 6)
+		write(2, ERR_6, ft_strlen(ERR_6));
+	if (err == 7)
+		write(2, ERR_7, ft_strlen(ERR_7));
+	if (err == 8)
+		write(2, ERR_8, ft_strlen(ERR_8));
 	return (1);
 }
