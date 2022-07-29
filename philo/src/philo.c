@@ -9,11 +9,11 @@ int	ft_eat_enough(t_data *data, t_philo *philo)
 	{
 		pthread_mutex_lock(&(data->eat));
 		if (data->nb_of_meal != philo[i].meal_eaten)
-			return (0);
+			return (i);
 		pthread_mutex_unlock(&(data->eat));
 		i ++;
 	}
-	return (1);
+	return (i);
 }
 
 void	ft_log(t_data *data, int id, char *action)
@@ -34,7 +34,7 @@ void	ft_check_time(int time_to, t_data *data)
 		delta = ft_gettime() - time;
 		if (delta >= time_to)
 			return ;
-		usleep(10);
+		usleep(50);
 	}
 }
 
@@ -64,7 +64,7 @@ void	*ft_routine(void *philo_void)
 	while (!data->dead)
 	{
 		ft_eat(data, philo);
-		if (data->nb_of_meal != -1 && ft_eat_enough(data, philo))
+		if (data->nb_of_meal != -1 && data->eat_enough)
 			return (NULL);
 		ft_log(data, philo->philo_id, SLEEP);
 		ft_check_time(data->time_to_sleep, data);
@@ -96,7 +96,7 @@ int	ft_launch_routine(t_data *data, t_philo *philo)
 	return (0);
 }
 
-int	ft_dead_philo(t_data *data, t_philo *philo)
+void	ft_dead_philo(t_data *data, t_philo *philo)
 {
 	int	i;
 
@@ -109,14 +109,17 @@ int	ft_dead_philo(t_data *data, t_philo *philo)
 			data->death_time = ft_gettime() - philo[i].last_eating_time;
 			if (data->death_time > data->time_to_die)
 			{
-				data->dead = 1;
 				ft_log(data, philo[i].philo_id, DEATH);
+				data->dead = 1;
 			}
 			pthread_mutex_unlock(&(data->eat));
 			i ++;
 		}
 		if (data->dead)
-			return (1);
+			break;
+		i = ft_eat_enough(data, philo);
+		if (data->nb_of_meal != -1 && i == data->nb_philo)
+			data->eat_enough = 1;
 	}
 }
 
@@ -131,7 +134,7 @@ int	ft_philo(t_data *data)
 	data->start_time = ft_gettime();
 	if (ft_launch_routine(data, philo))
 		return (1);	
-	while (!ft_dead_philo(data, philo))
-		;
+	ft_dead_philo(data, philo);
+	ft_exit_philo(data, philo);
 	return (0);
 }

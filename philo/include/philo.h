@@ -31,6 +31,7 @@ typedef struct	t_data
 	int				time_to_sleep;
 	int				nb_of_meal;
 	int				dead;
+	int				eat_enough;
 
 	long long		start_time;
 	long long		death_time;
@@ -85,6 +86,12 @@ void	ft_init_philo(t_data *data, t_philo *philo);
  */
 
 int		ft_philo(t_data *data);
+
+/*
+ ** [   END.C   ]
+ */
+
+void	ft_exit_philo(t_data *data, t_philo *philo);
 
 /*
  ** [   MAIN.C   ]

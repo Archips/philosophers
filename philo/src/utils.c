@@ -24,7 +24,6 @@ int	ft_strlen(const char *str)
 long	ft_atoi(const char *str)
 {
 	int			i;
-	int			neg;
 	long		nb;
 
 	i = 0;

@@ -7,6 +7,7 @@ void	ft_init_data(t_data *data, int ac, char **av)
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	data->dead = 0;
+	data->eat_enough = 0;
 	data->start_time = 0;
 	if (ac == 6)
 		data->nb_of_meal = ft_atoi(av[5]);

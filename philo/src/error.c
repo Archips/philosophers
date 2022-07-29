@@ -6,6 +6,7 @@ int	ft_is_num(int ac, char **av)
 	int	j;
 
 	i = 1;
+	(void) ac;
 	while (av[i])
 	{
 		j = 0;
