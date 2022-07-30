@@ -19,7 +19,8 @@ int	ft_eat_enough(t_data *data, t_philo *philo)
 void	ft_log(t_data *data, int id, char *action)
 {
 	pthread_mutex_lock(&(data->log));
-	printf("%lld %d %s\n", ft_gettime() - data->start_time, id + 1, action);
+	if (!data->dead)
+		printf("%lld %d %s\n", ft_gettime() - data->start_time, id + 1, action);
 	pthread_mutex_unlock(&(data->log));
 }
 
@@ -59,7 +60,7 @@ void	*ft_routine(void *philo_void)
 	t_philo	*philo;
 	t_data	*data;
 
-	philo = philo_void;
+	philo = (t_philo *) philo_void;
 	data = philo->data;
 	while (!data->dead)
 	{
