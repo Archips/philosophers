@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/31 09:27:57 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/31 09:36:44 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -22,9 +34,8 @@
 # define FORK	"has taken a fork"
 # define DEATH	"died"
 
-typedef struct	t_data
+typedef struct s_data
 {
-
 	int				nb_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -36,13 +47,13 @@ typedef struct	t_data
 	long long		start_time;
 	long long		death_time;
 
-	pthread_mutex_t *fork;
-	pthread_mutex_t eat;
-	pthread_mutex_t log;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	eat;
+	pthread_mutex_t	log;
 
 }				t_data;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int			l_fork;
 	int			r_fork;
@@ -52,7 +63,6 @@ typedef struct	s_philo
 	long long	last_eating_time;
 
 	pthread_t	philo_thread;
-	
 	t_data		*data;
 
 }				t_philo;
@@ -61,9 +71,9 @@ typedef struct	s_philo
  ** [   ERROR.C   ]
  */
 
-int	ft_is_num(int ac, char **av);
-int	ft_check_args(int ac, char **av);	
-int	ft_error_message(int err);
+int			ft_is_num(int ac, char **av);
+int			ft_check_args(int ac, char **av);	
+int			ft_error_message(int err);
 
 /*
  ** [   UTILS.C   ]
@@ -77,26 +87,40 @@ long		ft_atoi(const char *str);
  ** [   INIT.C   ]
  */
 
-void	ft_init_data(t_data *data, int ac, char **av);
-int		ft_init_mutex(t_data *data);
-void	ft_init_philo(t_data *data, t_philo *philo);
+void		ft_init_data(t_data *data, int ac, char **av);
+int			ft_init_mutex(t_data *data);
+void		ft_init_philo(t_data *data, t_philo *philo);
+
+/*
+ ** [   EAT.C   ]
+ */
+
+int			ft_eat_enough(t_data *data, t_philo *philo);
+void		ft_eat(t_data *data, t_philo *philo);
 
 /*
  ** [   PHILO.C   ]
  */
 
-int		ft_philo(t_data *data);
+int			ft_philo(t_data *data);
+
+/*
+ ** [   PHILO.C   ]
+ */
+
+void		ft_log(t_data *data, int id, char *action);
+void		ft_check_time(int time_to, t_data *data);
 
 /*
  ** [   END.C   ]
  */
 
-void	ft_exit_philo(t_data *data, t_philo *philo);
+void		ft_exit_philo(t_data *data, t_philo *philo);
 
 /*
  ** [   MAIN.C   ]
  */
 
-int		main(int ac, char **av);
+int			main(int ac, char **av);
 
 #endif

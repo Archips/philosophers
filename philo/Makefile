@@ -7,7 +7,9 @@ SRC_DIR		= src
 SRCS		= main.c		\
 			  error.c		\
 			  init.c		\
+			  eat.c			\
 			  philo.c		\
+			  philo_utils.c	\
 			  utils.c		\
 			  exit.c
 
@@ -19,7 +21,7 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 CC			= clang
 CPPFLAGS    += $(INC:%=-I%)
 
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g3
+CFLAGS		= -Wall -Wextra -Werror -pthread
 
 RM		= rm -rf
 MAKE	= make -C

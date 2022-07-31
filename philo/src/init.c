@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/31 09:29:03 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/31 09:29:41 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_init_data(t_data *data, int ac, char **av)
@@ -15,12 +27,13 @@ void	ft_init_data(t_data *data, int ac, char **av)
 		data->nb_of_meal = -1;
 }
 
-int ft_init_mutex(t_data *data)
+int	ft_init_mutex(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->nb_philo);
+	data->fork = (pthread_mutex_t *)
+		malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
 		return (ft_error_message(8));
 	while (i < data->nb_philo)

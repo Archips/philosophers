@@ -1,48 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/31 09:30:02 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/31 09:30:04 by athirion         ###   ########.fr       */
+/*   Created: 2022/07/31 09:30:25 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/31 09:30:26 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	ft_gettime(void)
+void	ft_log(t_data *data, int id, char *action)
 {
-	struct timeval	time_value;
-	long long		time;
-
-	gettimeofday(&time_value, NULL);
-	time = time_value.tv_sec * 1000 + time_value.tv_usec / 1000;
-	return (time);
+	pthread_mutex_lock(&(data->log));
+	if (!data->dead)
+		printf("%lld %d %s\n", ft_gettime() - data->start_time, id + 1, action);
+	pthread_mutex_unlock(&(data->log));
 }
 
-int	ft_strlen(const char *str)
+void	ft_check_time(int time_to, t_data *data)
 {
-	int	i;
+	long long	time;
+	long long	delta;
 
-	i = 0;
-	while (str[i])
-		i ++;
-	return (i);
-}
-
-long	ft_atoi(const char *str)
-{
-	int			i;
-	long		nb;
-
-	i = 0;
-	nb = 0;
-	while (str[i])
+	time = ft_gettime();
+	while (!data->dead)
 	{
-		nb = nb * 10 + str[i] - 48;
-		i ++;
+		delta = ft_gettime() - time;
+		if (delta >= time_to)
+			return ;
+		usleep(50);
 	}
-	return (nb);
 }

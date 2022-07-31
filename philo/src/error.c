@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/31 09:28:34 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/31 09:28:35 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_is_num(int ac, char **av)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 1;
@@ -28,7 +40,7 @@ int	ft_check_args(int ac, char **av)
 
 	i = 1;
 	if (ac != 5 && ac != 6)
-		return(1);
+		return (1);
 	if (!ft_is_num(ac, av))
 		return (2);
 	while (av[i])
