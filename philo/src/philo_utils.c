@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:30:25 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/31 09:30:26 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/31 11:59:21 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	ft_check_time(int time_to, t_data *data)
 		delta = ft_gettime() - time;
 		if (delta >= time_to)
 			return ;
-		usleep(50);
+		usleep(300);
 	}
 }

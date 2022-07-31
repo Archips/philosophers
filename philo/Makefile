@@ -21,7 +21,7 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 CC			= clang
 CPPFLAGS    += $(INC:%=-I%)
 
-CFLAGS		= -Wall -Wextra -Werror -pthread
+CFLAGS		= -Wall -Wextra -Werror -g -pthread
 
 RM		= rm -rf
 MAKE	= make -C

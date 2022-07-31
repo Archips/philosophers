@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:25:03 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/31 09:25:07 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/31 12:23:59 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	ft_launch_routine(t_data *data, t_philo *philo)
 		if (pthread_create(&(philo[i].philo_thread),
 				NULL, ft_routine, &(philo[i])) != 0)
 			return (ft_error_message(7));
+		pthread_mutex_lock(&(data->eat));
 		philo[i].last_eating_time = ft_gettime();
+		pthread_mutex_unlock(&(data->eat));
 		i += 2;
 	}
 	i = 1;
@@ -50,7 +52,9 @@ int	ft_launch_routine(t_data *data, t_philo *philo)
 		if (pthread_create(&(philo[i].philo_thread),
 				NULL, ft_routine, &(philo[i])) != 0)
 			return (ft_error_message(7));
+		pthread_mutex_lock(&(data->eat));
 		philo[i].last_eating_time = ft_gettime();
+		pthread_mutex_unlock(&(data->eat));
 		i += 2;
 	}
 	return (0);
