@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:27:57 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/31 09:36:44 by athirion         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:35:48 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	eat;
+	pthread_mutex_t	death;
 	pthread_mutex_t	log;
 
 }				t_data;
@@ -82,6 +83,7 @@ int			ft_error_message(int err);
 long long	ft_gettime(void);
 int			ft_strlen(const char *str);
 long		ft_atoi(const char *str);
+void		ft_swap(int *a, int *b);
 
 /*
  ** [   INIT.C   ]
@@ -95,6 +97,7 @@ void		ft_init_philo(t_data *data, t_philo *philo);
  ** [   EAT.C   ]
  */
 
+int			ft_starving_philo(t_data *data, t_philo *philo);
 int			ft_eat_enough(t_data *data, t_philo *philo);
 void		ft_eat(t_data *data, t_philo *philo);
 

@@ -1,9 +1,9 @@
-NAME		= philo
+# Makefile for C programs that requires no dependencies.
 
 INC_DIR		= include
-INC			= $(INC_DIR) 
-			  
 SRC_DIR		= src
+OBJ_DIR		= obj
+
 SRCS		= main.c		\
 			  error.c		\
 			  init.c		\
@@ -13,22 +13,39 @@ SRCS		= main.c		\
 			  utils.c		\
 			  exit.c
 
-SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
-
-OBJ_DIR 	= obj
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
 CC			= clang
-CPPFLAGS    += $(INC:%=-I%)
+CFLAGS		= -Wall -Wextra -Werror -g
+CPPFLAGS	= -Iinclude -pthread
+SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
+OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+NAME		= philo
 
-CFLAGS		= -Wall -Wextra -Werror -g -pthread
+#------------------------------------------------#
+#	SHELL CMDS									 #
+#------------------------------------------------#
 
-RM		= rm -rf
-MAKE	= make -C
+RM			= rm -rf
+VALGRIND	= valgrind -q --leak-check=yes --show-leak-kinds=all
+HELGRIND	= valgrind -q --tool=helgrind
+ARGS		= 3 310 150 150
+# ARGS		= 4 410 200 200
+# ARGS		= 2 210 100 100
 
-# ========== [ Recipe ]
+#------------------------------------------------#
+#	RECIPES										 #
+#------------------------------------------------#
+
+.PHONY: all san_thread san_addr clean fclean re norm update malloc_test
 
 all: $(NAME)
+
+san_thread: CC := gcc
+san_thread: CFLAGS := $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow
+san_thread: $(NAME)
+
+san_addr: CC := gcc
+san_addr: CFLAGS := $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow
+san_addr: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)
@@ -45,7 +62,9 @@ clean:
 
 fclean: clean
 	@[ -f $(NAME) ] \
-		&& $(RM) $(NAME) && $(ECHO)"$(R)removed$(END) $(NAME)/\n" || true
+		&& $(RM) $(NAME) && $(ECHO)"$(R)removed$(END) $(NAME)\n" || true
+
+re : fclean all
 
 norm:
 	@norminette -R CheckForbiddenSourceHeader $(SRCS) | grep -v "OK" || true
@@ -53,11 +72,24 @@ norm:
 	@norminette -R CheckDefine $(INC_DIR) | grep -v "OK" || true
 	@$(ECHO)"$(G)checked$(END) headers\n"
 
-re : fclean all
+update:
+	@git pull
+	@git submodule update --init
+	@$(ECHO)"$(G)updated$(END)\n"
 
-.PHONY: all clean fclean norm re
+malloc_test: $(OBJS)
+	@clang -Wall -Wextra -Werror -g -fsanitize=undefined -rdynamic -o $@ ${OBJS} -Ltest/ft_mallocator -lmallocator
 
-# ========== [ Stdout ]
+run:
+	@./$(NAME) $(ARGS) || true
+valgrind_run:
+	@$(VALGRIND) ./$(NAME) $(ARGS) || true
+helgrind_run:
+	@$(HELGRIND) ./$(NAME) $(ARGS) || true
+
+#------------------------------------------------#
+#	STDOUT										 #
+#------------------------------------------------#
 
 R		= $(shell tput setaf 1)
 G		= $(shell tput setaf 2)

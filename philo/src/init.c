@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:29:03 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/31 09:29:41 by athirion         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:09:43 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_init_mutex(t_data *data)
 	}
 	if (pthread_mutex_init(&(data->eat), NULL) != 0)
 		return (ft_error_message(6));
+	if (pthread_mutex_init(&(data->death), NULL) != 0)
+		return (ft_error_message(6));
 	if (pthread_mutex_init(&(data->log), NULL) != 0)
 		return (ft_error_message(6));
 	return (0);
@@ -58,11 +60,8 @@ void	ft_init_philo(t_data *data, t_philo *philo)
 	{
 		philo[i].data = data;
 		philo[i].last_eating_time = 0;
-		philo[i].r_fork = i;
-		if (i == 0)
-			philo[i].l_fork = data->nb_philo - 1;
-		else
-			philo[i].l_fork = i - 1;
+		philo[i].l_fork = i;
+		philo[i].r_fork = (i + 1) % data->nb_philo;
 		philo[i].philo_id = i;
 		philo[i].meal_eaten = 0;
 		i ++;
