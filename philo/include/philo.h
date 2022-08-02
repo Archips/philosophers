@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:27:57 by athirion          #+#    #+#             */
-/*   Updated: 2022/08/02 17:35:48 by athirion         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:10:44 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,20 @@ void		ft_eat(t_data *data, t_philo *philo);
  ** [   PHILO.C   ]
  */
 
+void		*ft_routine(void *philo_void);
+int			ft_lauch_routine(t_data *data, t_philo *philo);
+void		ft_dead_philo(t_data *data, t_philo *philo, int i);
 int			ft_philo(t_data *data);
 
 /*
- ** [   PHILO.C   ]
+ ** [   PHILO_UTILS.C   ]
  */
 
 void		ft_log(t_data *data, int id, char *action);
 void		ft_check_time(int time_to, t_data *data);
 
 /*
- ** [   END.C   ]
+ ** [   EXIT.C   ]
  */
 
 void		ft_exit_philo(t_data *data, t_philo *philo);
