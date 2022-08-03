@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:25:03 by athirion          #+#    #+#             */
-/*   Updated: 2022/08/02 17:37:35 by athirion         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:43:18 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	ft_dead_philo(t_data *data, t_philo *philo, int i)
 		{
 			pthread_mutex_lock(&(data->eat));
 			data->death_time = ft_gettime() - philo[i].last_eating_time;
-			if (data->death_time > data->time_to_die)
+			if (ft_starving_philo(data, &philo[i])
+				&& data->death_time > data->time_to_die)
 			{
 				ft_log(data, philo[i].philo_id, DEATH);
 				pthread_mutex_lock(&(data->death));
