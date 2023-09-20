@@ -2,6 +2,10 @@
 
 This project is an implementation of the classic dining philosophers problem using threads and mutexes. The dining philosophers problem is a concurrency synchronization challenge that models a scenario where a group of philosophers sits at a round table and alternates between eating, thinking, and sleeping. To ensure that the philosophers can eat without conflicts, mutexes are used to protect the state of forks placed between them.
 
+## Score
+
+-  100%
+
 ## Project Highlights
 - Simulates the classic dining philosophers problem.
 - Utilizes threads to represent each philosopher at the round table.
